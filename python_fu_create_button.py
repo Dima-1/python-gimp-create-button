@@ -1,8 +1,11 @@
 #!/usr/bin/env python
 
 from gimpfu import *
+import os
 
-def create_button(img, layer, name):
+os_path=os.getcwd()
+
+def create_button(img, layer,name, path_name,dist):
     prev_layer = img.active_layer
     non_empty, x1, y1, x2, y2 = pdb.gimp_selection_bounds(img)
     if non_empty:
@@ -39,7 +42,11 @@ register(
     "2018",
     "<Image>/Script/Create button...",
     "*",
-    [(PF_STRING, "name", "Common name of layers", "button")],
+    [
+    (PF_STRING, "name", "Common name of layers", "button"),
+    (PF_RADIO, "dist","Save to:", 0, (("layers",0),("files", 1))),
+    (PF_DIRNAME, "path_name", "Output directory", os_path)
+    ],
     [],
     create_button)
 
